@@ -13,6 +13,7 @@ import {
 } from "@remix-run/react";
 
 import appStylesHref from "./app.css";
+import styles from './tailwind.css';
 import { LinksFunction, LoaderFunctionArgs, json, redirect } from "@remix-run/node";
 
 import { createEmptyContact, getContacts } from './data';
@@ -21,6 +22,7 @@ import { useEffect } from "react";
 // 每个路由都可以导出，然后remix会收集起来，统一在页面中渲染
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
+  { rel: "stylesheet", href: styles },
 ];
 
 /**
