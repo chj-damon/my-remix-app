@@ -20,6 +20,16 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   return json({ contact });
 }
 
+export const action = async ({ params, request }: ActionFunctionArgs) => {
+  invariant(params.contactId, "Missing contactId parameter");
+
+  const formData = await request.formData();
+
+  return updateContact(params.contactId, {
+    favorite: formData.get("favorite") === "true",
+  })
+}
+
 export default function Contact() {
   const { contact } = useLoaderData<typeof loader>();
 
@@ -82,16 +92,6 @@ export default function Contact() {
       </div>
     </div>
   );
-}
-
-export const action = async ({ params, request }: ActionFunctionArgs) => {
-  invariant(params.contactId, "Missing contactId parameter");
-
-  const formData = await request.formData();
-
-  return updateContact(params.contactId, {
-    favorite: formData.get("favorite") === "true",
-  })
 }
 
 /** 当我们想要关注或者取关的时候，实际上不应该引起任何URL上的变化，这时候就应该用useFetcher来实现 */
